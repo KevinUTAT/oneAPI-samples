@@ -37,11 +37,9 @@ int main()
     //     std::cout << "Device dose not support USM, stop!" << std::endl;
     //     std::terminate();
     // }
-    
-    float delta = 0.0;
 
     auto start = std::chrono::high_resolution_clock::now();
-    delta = small_6x5_trivial.run_test(q, true);
+    small_6x5_trivial.run_test(q, true);
     auto end = std::chrono::high_resolution_clock::now();
     small_6x5_trivial.print_result();
 

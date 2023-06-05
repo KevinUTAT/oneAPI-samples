@@ -36,17 +36,17 @@ class QRD_R_Pipe_2matmul;
 class QRD_R_Pipe_2S;
 class QRD_iterations_Pipe;
 class SVD_V_Pipe;
-class SVD_V_ON_Pipe;
+// class SVD_V_ON_Pipe;
 class SVD_V_Pipe2dma;
-class SVD_V_Pipe2post;
-class SVD_S_Pipe2dup;
-class SVD_S_Pipe2V;
+// class SVD_V_Pipe2post;
+// class SVD_S_Pipe2dup;
+// class SVD_S_Pipe2V;
 class SVD_S_Pipe2dma;
-class SVD_U_Pipe;
+// class SVD_U_Pipe;
 class SVD_U_ON_Pipe;
 class SVD_Converge_Pipe;
 class Post_A_Pipe;
-class Post_AV_Pipe;
+// class Post_AV_Pipe;
 // kernels
 class MATMULDDR2PipeA;
 class MATMULDDR2PipeAt;
@@ -126,16 +126,16 @@ void singularValueDecomposition(
     using SMatrixPipe2Dma = sycl::ext::intel::pipe<SVD_S_Pipe2dma, PipeType, 3>;
     using IterationsPipe = sycl::ext::intel::pipe<QRD_iterations_Pipe, int, 3>;
     using VMatrixPipe = sycl::ext::intel::pipe<SVD_V_Pipe, PipeType, 3>;
-    using VOrthNormPipe = sycl::ext::intel::pipe<SVD_V_ON_Pipe, PipeType, 3>;
+    // using VOrthNormPipe = sycl::ext::intel::pipe<SVD_V_ON_Pipe, PipeType, 3>;
     using VPipe2dma = sycl::ext::intel::pipe<SVD_V_Pipe2dma, PipeType, 3>;
-    using VPipe2post = sycl::ext::intel::pipe<SVD_V_Pipe2post, PipeType, 3>;
+    // using VPipe2post = sycl::ext::intel::pipe<SVD_V_Pipe2post, PipeType, 3>;
     using UOrthNormPipe = sycl::ext::intel::pipe<SVD_U_ON_Pipe, PipeType, 3>;
-    using SPipe2dup = sycl::ext::intel::pipe<SVD_S_Pipe2dup, PipeType, 3>;
-    using SPipe2V = sycl::ext::intel::pipe<SVD_S_Pipe2V, PipeType, 3>;
-    using UPipe = sycl::ext::intel::pipe<SVD_U_Pipe, PipeType, 3>;
+    // using SPipe2dup = sycl::ext::intel::pipe<SVD_S_Pipe2dup, PipeType, 3>;
+    // using SPipe2V = sycl::ext::intel::pipe<SVD_S_Pipe2V, PipeType, 3>;
+    // using UPipe = sycl::ext::intel::pipe<SVD_U_Pipe, PipeType, 3>;
     using ConvergePipe = sycl::ext::intel::pipe<SVD_Converge_Pipe, bool, 2>;
     using PostAPipe = sycl::ext::intel::pipe<Post_A_Pipe, PipeType, 3>;
-    using PostAVPipe = sycl::ext::intel::pipe<Post_AV_Pipe, PipeType, 3>;
+    // using PostAVPipe = sycl::ext::intel::pipe<Post_AV_Pipe, PipeType, 3>;
 
     // Allocate FPGA  memory.
     TT *a_device = sycl::malloc_shared<TT>(aMatrixSize, q);

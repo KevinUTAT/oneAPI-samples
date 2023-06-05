@@ -1,6 +1,6 @@
 {
     "guid": "A211FDE2-B037-4069-BD84-C45E354798B7",
-    "name": "FPGA Compile",
+    "name": "SVD",
     "categories": ["Toolkit/oneAPI Direct Programming/C++SYCL FPGA/Getting Started Tutorials"],
     "description": "Intel® FPGA tutorial introducing how to SYCL for Intel® FPGA",
     "toolchain": ["icpx"],
@@ -12,7 +12,7 @@
       "base": "../../..",
       "include": [
         "README.md",
-        "Tutorials/GettingStarted/fpga_compile",
+        "ReferenceDesigns/test/SVD",
         "include"
       ],
       "exclude": []
@@ -27,7 +27,7 @@
             "cd build",
             "cmake ..",
             "make fpga_emu",
-            "./fpga_compile.fpga_emu"
+            "./svd_demo.fpga_emu"
           ]
         },
         {
@@ -51,7 +51,7 @@
             "cd build",
             "cmake -G \"NMake Makefiles\" ../Tutorials/GettingStarted/fpga_compile",
             "nmake fpga_emu",
-            "fpga_compile.fpga_emu.exe"
+            "svd_demo.fpga_emu.exe"
           ]
         },
         {
@@ -61,7 +61,7 @@
             "cd ../../..",
             "mkdir build",
             "cd build",
-            "cmake -G \"NMake Makefiles\" ../Tutorials/GettingStarted/fpga_compile",
+            "cmake -G \"NMake Makefiles\" ../ReferenceDesigns/test/SVD",
             "nmake report"
           ]
         }
