@@ -26,9 +26,6 @@
             sycl::ext::oneapi::experimental::printf(_format, ## __VA_ARGS__); }
 
 
-#define EPSILON 2E-6
-
-
 
 namespace svd_testbench_tool {  // not for kernel code
 

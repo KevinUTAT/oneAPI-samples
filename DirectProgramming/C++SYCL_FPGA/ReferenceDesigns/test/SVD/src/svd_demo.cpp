@@ -43,8 +43,8 @@ int main()
     auto end = std::chrono::high_resolution_clock::now();
     small_6x5_trivial.print_result();
 
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "Kernel runtime: "
-         << duration.count() << " microseconds" << std::endl;
+         << duration.count() << " milliseconds" << std::endl;
 
 }

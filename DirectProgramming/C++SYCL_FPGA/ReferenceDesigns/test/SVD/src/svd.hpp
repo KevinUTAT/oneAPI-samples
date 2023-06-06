@@ -138,20 +138,20 @@ void singularValueDecomposition(
     // using PostAVPipe = sycl::ext::intel::pipe<Post_AV_Pipe, PipeType, 3>;
 
     // Allocate FPGA  memory.
-    TT *a_device = sycl::malloc_shared<TT>(aMatrixSize, q);
+    TT *a_device = sycl::malloc_device<TT>(aMatrixSize, q);
     if (a_device == nullptr) {
         std::cout << "Malloc A matrix USM failed" << std::endl;
         return;
     }
-    TT *at_device = sycl::malloc_shared<TT>(aMatrixSize, q);
+    TT *at_device = sycl::malloc_device<TT>(aMatrixSize, q);
     if (at_device == nullptr) {
         std::cout << "Malloc At matrix USM failed" << std::endl;
         return;
     }
-    TT *v_device = sycl::malloc_shared<TT>(qMatrixSize, q);
-    TT *r_device = sycl::malloc_shared<TT>(rMatrixSize, q);
-    TT *u_device = sycl::malloc_shared<TT>(uMatrixSize, q);
-    int *iters_device = sycl::malloc_shared<int>(1, q);
+    TT *v_device = sycl::malloc_device<TT>(qMatrixSize, q);
+    TT *r_device = sycl::malloc_device<TT>(rMatrixSize, q);
+    TT *u_device = sycl::malloc_device<TT>(uMatrixSize, q);
+    int *iters_device = sycl::malloc_device<int>(1, q);
 
     // copy matrix datas to FPGA DDR
     q.memcpy(a_device, a_matrix.data(), aMatrixSize * sizeof(TT))
