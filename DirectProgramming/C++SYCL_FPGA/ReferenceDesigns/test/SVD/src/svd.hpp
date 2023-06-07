@@ -20,6 +20,8 @@
 #include "orthogonalizer.hpp"
 #include "post_process.hpp"
 
+#define QR_MAX_ITERATIONS 9
+
 // pipes 
 class APipe;
 class AtPipe;
@@ -188,7 +190,6 @@ void singularValueDecomposition(
     );
 
     // QR iterations -----------------------------------------------------------------
-    int QR_MAX_ITERATIONS = 99;
 
     // kernel QR decompose AAt
     sycl::event rq_qrd_event = q.single_task<ITER_QRD>(
@@ -223,29 +224,6 @@ void singularValueDecomposition(
                         VMatrixPipe, ConvergePipe>{QR_MAX_ITERATIONS}
     );
 
-    // // V orthogonazer
-    // sycl::event v_orthogonalize_event = q.single_task<VOrthogonalizer>(
-    //     Orthogonazer<TT, is_complex, cols_a, cols_a, 110, 
-    //                     kNumElementsPerDDRBurst, VMatrixPipe, 
-    //                     VOrthNormPipe>{1}
-    // );
-
-    // // V duplicator
-    // q.single_task<VDuplicator>(
-    //     PipeDuplicator2x<TT, VOrthNormPipe, VPipe2post, VPipe2dma>{}
-    // );
-
-    // // Build S from R
-    // sycl::event s_bulid_event = q.single_task<SVDSBuilder>(
-    //     fpga_svd::SBuilder<TT, is_complex, cols_a, cols_a, rows_a, cols_a, 
-    //                     kNumElementsPerDDRBurst, RMatrixPipe2S, SPipe2dup>{1}
-    // );
-
-    // // S duplicator
-    // q.single_task<SDuplicator>(
-    //     PipeDuplicator2x<TT, SPipe2dup, SPipe2V, SMatrixPipe2Dma>{}
-    // );
-
     // read in A (again)
     q.submit([&](sycl::handler &h) {
     h.single_task<SVDPostDDR2PipeA>([=]() [[intel::kernel_args_restrict]] {
@@ -253,26 +231,6 @@ void singularValueDecomposition(
                                 PostAPipe>(a_device);
         });
     });
-
-    // // kernel calculate A @ V
-    // q.single_task<MatMul_AV>(
-    //     fpga_linalg::NaiveMatmulOnce<TT, is_complex, rows_a, cols_a, cols_a, cols_a,
-    //                             kNumElementsPerDDRBurst, PostAPipe,
-    //                             VPipe2post, PostAVPipe>{}
-    // );
-
-    // // Build U from AV and S
-    // sycl::event u_bulid_event = q.single_task<SVDUBuilder>(
-    //     fpga_svd::UBuilder<TT, is_complex, rows_a, cols_a, rows_a, cols_a, 
-    //                     kNumElementsPerDDRBurst, PostAVPipe, SPipe2V, UPipe>{}
-    // );
-
-    // // U orthogonazer
-    // sycl::event u_orthogonalize_event = q.single_task<UOrthogonalizer>(
-    //     Orthogonazer<TT, is_complex, rows_a, rows_a, 110, 
-    //                     kNumElementsPerDDRBurst, UPipe, 
-    //                     UOrthNormPipe>{1}
-    // );
 
     // SVD Post process
     q.single_task<SVDPostProcess>(

@@ -155,10 +155,10 @@ struct SVDTestcase
 
     void print_result()
     {
-        std::cout << "Singular value error: " << S_error << "(" << S_error_r * 100 << "%)" << std::endl;
-        std::cout << "Decomposition error (A = USVt): " << A_error << "(" << A_error_r * 100 << "%)"<< std::endl;
-        std::cout << "U orthogonal error: " << U_orthogonal_error << std::endl;
-        std::cout << "V orthogonal error: " << V_orthogonal_error << std::endl;
+        std::cout << "Singular value delta: " << S_error << "(" << S_error_r * 100 << "%)" << std::endl;
+        std::cout << "Decomposition delta (A = USVt): " << A_error << "(" << A_error_r * 100 << "%)"<< std::endl;
+        std::cout << "U orthogonal delta: " << U_orthogonal_error << std::endl;
+        std::cout << "V orthogonal delta: " << V_orthogonal_error << std::endl;
     }
 };
 

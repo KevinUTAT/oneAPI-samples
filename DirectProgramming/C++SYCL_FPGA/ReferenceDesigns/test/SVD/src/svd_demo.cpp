@@ -39,12 +39,15 @@ int main()
     // }
 
     auto start = std::chrono::high_resolution_clock::now();
-    small_6x5_trivial.run_test(q, true);
+    // double delta = small_6x5_trivial.run_test(q, true);
+    double delta = small_4x4_trivial.run_test(q, true);
     auto end = std::chrono::high_resolution_clock::now();
-    small_6x5_trivial.print_result();
+    // small_6x5_trivial.print_result();
+    small_4x4_trivial.print_result();
 
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "Kernel runtime: "
          << duration.count() << " milliseconds" << std::endl;
+    if (delta < 0.01) std::cout << "PASSED" << std::endl;
 
 }
