@@ -59,6 +59,8 @@ struct NaiveMatmul {
                 fpga_tools::Pow2(fpga_tools::CeilLog2(bNumBanks));
         constexpr short mmNumBanksNextPow2 =
                 fpga_tools::Pow2(fpga_tools::CeilLog2(mmNumBanks));
+        
+        IterationsFinished::write(0);
             
         for (int iteration = 0; iteration < iteration_count; iteration ++) {
 
