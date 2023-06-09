@@ -20,7 +20,7 @@
 #include "orthogonalizer.hpp"
 #include "post_process.hpp"
 
-#define QR_MAX_ITERATIONS 9
+#define QR_MAX_ITERATIONS 999
 
 // pipes 
 class APipe;
@@ -38,17 +38,12 @@ class QRD_R_Pipe_2matmul;
 class QRD_R_Pipe_2S;
 class QRD_iterations_Pipe;
 class SVD_V_Pipe;
-// class SVD_V_ON_Pipe;
 class SVD_V_Pipe2dma;
-// class SVD_V_Pipe2post;
-// class SVD_S_Pipe2dup;
-// class SVD_S_Pipe2V;
 class SVD_S_Pipe2dma;
-// class SVD_U_Pipe;
 class SVD_U_ON_Pipe;
 class SVD_Converge_Pipe;
 class Post_A_Pipe;
-// class Post_AV_Pipe;
+
 // kernels
 class MATMULDDR2PipeA;
 class MATMULDDR2PipeAt;
@@ -68,13 +63,6 @@ class ConvChecker;
 class CollectIterationCount;
 class QAccumulator;
 class QDuplicator;
-// class VOrthogonalizer;
-// class UOrthogonalizer;
-// class SVDSBuilder;
-// class SDuplicator;
-// class VDuplicator;
-// class MatMul_AV;
-// class SVDUBuilder;
 class SVDPostDDR2PipeA;
 class SVDPostProcess;
 
@@ -238,7 +226,6 @@ void singularValueDecomposition(
                                 kNumElementsPerDDRBurst, 
                                 PostAPipe, RMatrixPipe2S, VMatrixPipe, 
                                 UOrthNormPipe, SMatrixPipe2Dma, VPipe2dma>{}
-                                
     );
 
     // DMA Consumer kernel for the result S matrix

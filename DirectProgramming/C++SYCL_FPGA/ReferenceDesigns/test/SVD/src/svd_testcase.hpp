@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <chrono>
 #include "svd.hpp"
 #include "svd_helper.hpp"
 
@@ -125,16 +126,23 @@ struct SVDTestcase
         return max_diff;
     }
 
-    T run_test(sycl::queue q, bool print_result=false)
+    T run_test(sycl::queue q, bool print_result=false, bool timed=false)
     {
         std::vector<T> flat_A = col_major_A();
         std::vector<T> flat_U(rows_A * rows_A);
         std::vector<T> flat_S(rows_A * cols_A);
         std::vector<T> flat_V(cols_A * cols_A);
 
+        auto start = std::chrono::high_resolution_clock::now();
+        if (timed) start = std::chrono::high_resolution_clock::now();
         singularValueDecomposition<rows_A, cols_A, false, T>
             (flat_A, flat_U, flat_S, flat_V, q);
-        
+        if (timed) {
+            auto end = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+            std::cout << "Kernel runtime: "
+                << duration.count() << " milliseconds" << std::endl;
+        }
         compare_S(extract_singular_value(flat_S));
 
         A_error = check_USV(flat_A, flat_U, flat_S, flat_V);
@@ -265,5 +273,38 @@ SVDTestcase<float, 16, 16> small_16x16_trivial(
         0.38370047, 0.3086788,  0.20646569, 0.12279293}
     )
 );
+
+// SVDTestcase<float, 8, 7> small_8x7_trivial(
+//     std::vector<std::vector<float>> {
+//         {9.94276513, 1.59418708, 5.31570427, 2.94699892, 2.29633415, 9.37988807, 8.25643245},
+//         {7.81594749, 1.21988457, 0.30268154, 5.81121829, 2.97090789, 4.54063621, 9.46520084},
+//         {0.74409819, 9.06879738, 6.39989633, 4.86288086, 0.82151103, 6.50149874, 2.38621947},
+//         {7.08608763, 6.56053656, 7.22496268, 2.74371415, 3.40240259, 0.64436602, 0.56465921},
+//         {2.82707925, 4.46653124, 9.58671086, 8.79447370, 8.11066938, 3.93688174, 0.58116739},
+//         {3.36719360, 4.09415584, 0.92482172, 0.44672662, 2.95142948, 6.11604914, 8.06165813},
+//         {3.40863242, 9.05156828, 6.37608842, 3.85044907, 8.35446212, 1.77950092, 5.11185653},
+//         {5.29533017, 7.01724814, 5.05005671, 7.69724011, 9.57228067, 4.78429019, 6.58473354}
+//     },
+//     std::vector<float> (
+//         {37.92440275, 15.14685087, 8.42309268, 7.93628259, 6.67266843, 4.00485461, 1.22240010}
+//     )
+// );
+
+SVDTestcase<float, 8, 7> small_8x7_trivial(
+    std::vector<std::vector<float>> {
+        {8.76260202, 0.81417924, 8.11057592, 6.09861721, 1.16945558, 7.14839054, 2.59521331},
+        {5.44698794, 8.77256268, 9.91432134, 8.25487798, 1.97363324, 1.89532970, 8.33827919},
+        {5.08441743, 1.75202020, 3.33778067, 0.63361451, 1.52199570, 1.24156224, 5.70908663},
+        {6.46296038, 6.53813124, 9.44048016, 2.59326866, 6.23851206, 1.97112360, 0.46819856},
+        {7.49739756, 6.15580471, 9.69197449, 0.44904051, 5.58367157, 1.12969807, 8.62452559},
+        {5.36318497, 8.06629730, 6.80937533, 3.42879733, 0.35662368, 3.83916105, 4.85440952},
+        {7.75598987, 6.29906745, 2.93344563, 8.20448999, 0.32866946, 5.49268734, 2.22140202},
+        {5.30055998, 3.08502860, 9.16451937, 0.13376870, 5.52183665, 7.17266690, 2.92410590}
+    },
+    std::vector<float> (
+        {38.65450260, 11.11997526, 9.82668675, 6.70742472, 4.21300971, 4.12512634, 2.09643874}
+    )
+);
+
 
 #endif // __SVD_TESTCASE__

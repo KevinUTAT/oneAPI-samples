@@ -1,20 +1,17 @@
 #include <iostream>
 #include <vector>
-#include <chrono>
 #include <type_traits>
 #include <CL/sycl.hpp>
 #include <sycl/ext/intel/fpga_extensions.hpp>
 #include "dpc_common.hpp"
 
 // #define LARGE_MATRIX
-#define EPSILON 2E-6
-#define MAX_CONVERGENCY_ERROR 0.05
+#define EPSILON 1E-12
+#define MAX_CONVERGENCY_ERROR 0.00001
 
 #include "svd_helper.hpp"
 #include "svd.hpp"
 #include "svd_testcase.hpp"
-
-
 
 
 int main()
@@ -37,17 +34,18 @@ int main()
     //     std::cout << "Device dose not support USM, stop!" << std::endl;
     //     std::terminate();
     // }
-
-    auto start = std::chrono::high_resolution_clock::now();
-    // double delta = small_6x5_trivial.run_test(q, true);
-    double delta = small_4x4_trivial.run_test(q, true);
-    auto end = std::chrono::high_resolution_clock::now();
+    double delta = 0;
+    
+    // delta = small_6x5_trivial.run_test(q, false);
+    // double delta = small_4x4_trivial.run_test(q, true);
+    // delta = small_16x16_trivial.run_test(q, false);
+    small_8x7_trivial.run_test(q, true, true);
+    
     // small_6x5_trivial.print_result();
-    small_4x4_trivial.print_result();
-
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::cout << "Kernel runtime: "
-         << duration.count() << " milliseconds" << std::endl;
+    // small_4x4_trivial.print_result();
+    // small_16x16_trivial.print_result();
+    small_8x7_trivial.print_result();
+    
     if (delta < 0.01) std::cout << "PASSED" << std::endl;
 
 }
