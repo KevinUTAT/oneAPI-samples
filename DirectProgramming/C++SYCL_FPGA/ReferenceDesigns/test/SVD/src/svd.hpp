@@ -105,7 +105,6 @@ void singularValueDecomposition(
     using AtAMatrixPipe = sycl::ext::intel::pipe<AtAPipe, PipeType, 3>;
     using AtAMatmulItersPipe = sycl::ext::intel::pipe<MatmulItersPipe, int, 3>;
     using RQMatrixPipeW = sycl::ext::intel::pipe<RQPipeW, PipeType, 3>;
-    // using RQMatrixPipeR = sycl::ext::intel::pipe<RQPipeR, PipeType, 3>;
     using QRD_AMatrixPipe = sycl::ext::intel::pipe<QRD_APipe, PipeType, 3>;
     using QMatrixPipe2Dup = sycl::ext::intel::pipe<QRD_Q_Pipe_2dup, PipeType, 3>;
     using QMatrixPipe2Matmul = sycl::ext::intel::pipe<QRD_Q_Pipe_2matmul, PipeType, 3>;
@@ -116,16 +115,10 @@ void singularValueDecomposition(
     using SMatrixPipe2Dma = sycl::ext::intel::pipe<SVD_S_Pipe2dma, PipeType, 3>;
     using IterationsPipe = sycl::ext::intel::pipe<QRD_iterations_Pipe, int, 3>;
     using VMatrixPipe = sycl::ext::intel::pipe<SVD_V_Pipe, PipeType, 3>;
-    // using VOrthNormPipe = sycl::ext::intel::pipe<SVD_V_ON_Pipe, PipeType, 3>;
     using VPipe2dma = sycl::ext::intel::pipe<SVD_V_Pipe2dma, PipeType, 3>;
-    // using VPipe2post = sycl::ext::intel::pipe<SVD_V_Pipe2post, PipeType, 3>;
     using UOrthNormPipe = sycl::ext::intel::pipe<SVD_U_ON_Pipe, PipeType, 3>;
-    // using SPipe2dup = sycl::ext::intel::pipe<SVD_S_Pipe2dup, PipeType, 3>;
-    // using SPipe2V = sycl::ext::intel::pipe<SVD_S_Pipe2V, PipeType, 3>;
-    // using UPipe = sycl::ext::intel::pipe<SVD_U_Pipe, PipeType, 3>;
     using ConvergePipe = sycl::ext::intel::pipe<SVD_Converge_Pipe, bool, 2>;
     using PostAPipe = sycl::ext::intel::pipe<Post_A_Pipe, PipeType, 3>;
-    // using PostAVPipe = sycl::ext::intel::pipe<Post_AV_Pipe, PipeType, 3>;
 
     // Allocate FPGA  memory.
     TT *a_device = sycl::malloc_device<TT>(aMatrixSize, q);

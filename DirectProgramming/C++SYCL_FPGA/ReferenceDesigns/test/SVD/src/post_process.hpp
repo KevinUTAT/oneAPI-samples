@@ -93,7 +93,7 @@ struct PostProcess {
         [[intel::numbanks(uNumBanksNextPow2)]]  // NO-FORMAT: Attribute
         [[intel::bankwidth(kBankwidth)]]        // NO-FORMAT: Attribute
         [[intel::private_copies(4)]]            // NO-FORMAT: Attribute
-        [[intel::max_replicates(1)]]            // NO-FORMAT: Attribute
+        [[intel::max_replicates(8)]]            // NO-FORMAT: Attribute
         TT U_result[A_rows][A_rows];
         // PRINTF("Start load R\n");
         // load Rin into S_rusult, while resize and sqrt

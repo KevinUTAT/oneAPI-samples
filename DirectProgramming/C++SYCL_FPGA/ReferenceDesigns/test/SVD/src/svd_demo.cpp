@@ -7,7 +7,7 @@
 
 // #define LARGE_MATRIX
 #define EPSILON 1E-12
-#define MAX_CONVERGENCY_ERROR 0.00001
+#define MAX_CONVERGENCY_ERROR 0.000001
 
 #include "svd_helper.hpp"
 #include "svd.hpp"
