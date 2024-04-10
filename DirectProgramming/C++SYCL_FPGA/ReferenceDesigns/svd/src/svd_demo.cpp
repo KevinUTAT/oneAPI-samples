@@ -225,8 +225,8 @@ int main(int argc, char *argv[]) {
     auto test_error = small_4x4.RunTest(q, repetitions);
     small_4x4.PrintResult();
 #else
-    auto test_error = testcase_32x32.RunTest(q, repetitions);
-    testcase_32x32.PrintResult();
+    auto test_error = testcase_64x64.RunTest(q, repetitions);
+    testcase_64x64.PrintResult();
 #endif
     bool passed = test_error < 0.01;
     std::cout << (passed ? "PASSED" : "FAILED") << std::endl;
